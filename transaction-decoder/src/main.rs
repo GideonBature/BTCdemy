@@ -3,10 +3,10 @@ use hex;
 #[allow(unused)]
 fn read_version(transaction_hex: &str) -> /* Result<(), FromHexError> */ u32 {
     let transaction_bytes = hex::decode(transaction_hex).unwrap();
-    let version_bytes = &transaction_bytes[0..4];
-    print!("version bytes: {:?}", version_bytes);
+    let version_bytes = <[u8; 4]>::try_from(&transaction_bytes[0..4]).unwrap();
+    u32::from_le_bytes(version_bytes)
     // Ok(())
-    1
+    // 1
 }
 
 fn main() {
