@@ -1,14 +1,15 @@
 use hex;
+use std::io::Read;
 
 #[allow(unused)]
 fn read_version(transaction_hex: &str) -> /* Result<(), FromHexError> */ u32 {
     let transaction_bytes = hex::decode(transaction_hex).unwrap();
-    let version_bytes: [u8; 4] = (&transaction_bytes[0..4]).try_into().unwrap();
+    let mut bytes_slice = transaction_bytes.as_slice();
 
-    let num_inputs = transaction_bytes[4];
-    println!("num inputs: {}", num_inputs);
+    let mut buffer = [0; 4];
+    bytes_slice.read(&mut buffer).unwrap();
 
-    u32::from_le_bytes(version_bytes)
+    u32::from_le_bytes(buffer)
     // Ok(())
     // 1
 }
