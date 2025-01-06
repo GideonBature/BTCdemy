@@ -39,11 +39,15 @@ fn main() {
     let transaction_bytes = hex::decode(transaction_hex).unwrap();
     let mut bytes_slice = transaction_bytes.as_slice();
     let version = read_version(&mut bytes_slice);
-    let input_length = read_compact_size(&mut bytes_slice);
+    let input_count = read_compact_size(&mut bytes_slice);
+
+    for _ in 0..input_count {
+        let txid = read_txid(&mut bytes_slice);
+    }
 
     println!("bytes slice first element: {:?}", bytes_slice[0]);
     println!("version: {}", version);
-    println!("Input length: {}", input_length);
+    println!("Input length: {}", input_count);
 }
 
 #[cfg(test)]
