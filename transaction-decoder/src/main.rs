@@ -1,6 +1,15 @@
 use hex;
 use std::io::Read;
 
+
+#[derive(Debug)]
+struct Input {
+    txid: [u8; 32],
+    output_index: u32,
+    script_sig: Vec<u8>,
+    sequence: u32,
+}
+
 fn read_compact_size(transaction_bytes: &mut &[u8]) -> u64 {
     let mut compact_size = [0_u8; 1];
     transaction_bytes.read(&mut compact_size).unwrap();
@@ -54,6 +63,7 @@ fn main() {
     let mut bytes_slice = transaction_bytes.as_slice();
     let version = read_u32(&mut bytes_slice);
     let input_count = read_compact_size(&mut bytes_slice);
+    let mut inputs = vec![];
 
     for _ in 0..input_count {
         let txid = read_txid(&mut bytes_slice);
@@ -61,11 +71,18 @@ fn main() {
         let script_sig = read_script(&mut bytes_slice);
         let sequence = read_u32(&mut bytes_slice);
 
+        inputs.push(Input {
+            txid,
+            output_index,
+            script_sig,
+            sequence
+        });
+
     }
 
     println!("bytes slice first element: {:?}", bytes_slice[0]);
     println!("version: {}", version);
-    println!("Input length: {}", input_count);
+    println!("Inputs: {:?}", inputs);
 }
 
 #[cfg(test)]
