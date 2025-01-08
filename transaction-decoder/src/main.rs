@@ -71,11 +71,11 @@ fn read_u32(transaction_bytes: &mut &[u8]) -> /* Result<(), FromHexError> */ u32
     // 1
 }
 
-fn read_amount(transaction_bytes: &mut &[u8]) -> Amount {
-    let mut buffer = [0; 8];
-    transaction_bytes.read(&mut buffer).unwrap();
-    Amount(u64::from_le_bytes(buffer))
-}
+// fn read_amount(transaction_bytes: &mut &[u8]) -> Amount {
+//     let mut buffer = [0; 8];
+//     transaction_bytes.read(&mut buffer).unwrap();
+//     Amount(u64::from_le_bytes(buffer))
+// }
 
 fn read_txid(transaction_bytes: &mut &[u8]) -> String {
     let mut buffer = [0; 32];
