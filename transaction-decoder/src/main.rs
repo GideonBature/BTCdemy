@@ -106,12 +106,12 @@ fn main() {
         let script_sig = read_script(&mut bytes_slice);
         let sequence = read_u32(&mut bytes_slice);
 
-        // inputs.push(Input {
-        //     txid,
-        //     output_index,
-        //     script_sig,
-        //     sequence
-        // });
+        inputs.push(Input {
+            txid,
+            output_index,
+            script_sig,
+            sequence
+        });
 
     }
 
