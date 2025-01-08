@@ -38,29 +38,29 @@ trait BitcoinValue {
     }
 }
 
-// fn read_compact_size(transaction_bytes: &mut &[u8]) -> u64 {
-//     let mut compact_size = [0_u8; 1];
-//     transaction_bytes.read(&mut compact_size).unwrap();
+fn read_compact_size(transaction_bytes: &mut &[u8]) -> u64 {
+    let mut compact_size = [0_u8; 1];
+    transaction_bytes.read(&mut compact_size).unwrap();
 
-//     match compact_size[0] {
-//         0..=252 => compact_size[0] as u64,
-//         253 => {
-//             let mut buffer = [0; 2];
-//             transaction_bytes.read(&mut buffer).unwrap();
-//             u16::from_le_bytes(buffer) as u64
-//         },
-//         254 => {
-//             let mut buffer = [0; 4];
-//             transaction_bytes.read(&mut buffer).unwrap();
-//             u32::from_le_bytes(buffer) as u64
-//         },
-//         255 => {
-//             let mut buffer = [0; 8];
-//             transaction_bytes.read(&mut buffer).unwrap();
-//             u64::from_le_bytes(buffer)
-//         }
-//     }
-// }
+    match compact_size[0] {
+        0..=252 => compact_size[0] as u64,
+        253 => {
+            let mut buffer = [0; 2];
+            transaction_bytes.read(&mut buffer).unwrap();
+            u16::from_le_bytes(buffer) as u64
+        },
+        254 => {
+            let mut buffer = [0; 4];
+            transaction_bytes.read(&mut buffer).unwrap();
+            u32::from_le_bytes(buffer) as u64
+        },
+        255 => {
+            let mut buffer = [0; 8];
+            transaction_bytes.read(&mut buffer).unwrap();
+            u64::from_le_bytes(buffer)
+        }
+    }
+}
 
 #[allow(unused)]
 fn read_u32(transaction_bytes: &mut &[u8]) -> /* Result<(), FromHexError> */ u32 {
